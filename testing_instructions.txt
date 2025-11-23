@@ -1,0 +1,171 @@
+TESTING INSTRUCTIONS FOR GOOGLE PLAY CONSOLE REVIEWERS
+========================================================
+
+App Name: ClassHub
+Package: com.classhub.app
+Version: 1.0.0
+
+OVERVIEW
+--------
+ClassHub is an offline-first school management application that stores all data locally on the device. No network connectivity or external services are required for core functionality.
+
+KEY FEATURES TO TEST
+--------------------
+
+1. STUDENT DIRECTORY
+   - Navigate to "Students" tab
+   - Tap "+" button to add a new student
+   - Fill in: Name, Student ID, Class, Parent Name (optional), Parent Phone (optional)
+   - Tap "Add Photo" to test camera permission (permission requested only here)
+   - Save student
+   - Search for students by name or ID
+   - Tap on a student to view details
+   - Edit student information
+
+2. ATTENDANCE MARKING
+   - Navigate to "Attendance" tab
+   - Select a class from dropdown
+   - Select a date using the date picker
+   - For each student, use the menu (three dots) to:
+     * Check In
+     * Check Out
+     * Mark Late
+     * Mark Absent
+   - Verify attendance status is displayed correctly
+
+3. ANNOUNCEMENTS
+   - Navigate to "Announcements" tab
+   - Tap "+" button to create announcement
+   - Fill in: Title, Content, Class (optional - leave empty for all classes)
+   - Tap "Add Photo" to test camera permission
+   - Save announcement
+   - View announcements in list
+
+4. CALENDAR/SCHEDULE
+   - Navigate to "Calendar" tab
+   - Tap date selector to change date
+   - View attendance statistics for selected date
+   - View announcements for selected date
+
+5. MESSAGES
+   - Navigate to "Messages" tab
+   - Tap "+" button to send message
+   - Select student, enter sender name, toggle "From Parent" if needed
+   - Add message content
+   - Optionally add photo attachment
+   - Send message
+   - View messages in chronological order
+
+6. SETTINGS & EXPORT
+   - Navigate to Settings (gear icon in app bar)
+   - Tap "Manage Classes" to add/edit classes
+   - Tap "Export Data" to test SAF (Storage Access Framework)
+   - Verify export creates JSON file in chosen location
+
+PERMISSIONS TESTING
+-------------------
+
+CAMERA PERMISSION:
+- App does NOT request camera permission on launch
+- Permission is requested ONLY when user taps "Add Photo" button
+- Test in: Add Student, Add Announcement, Add Message screens
+- Verify permission dialog appears only when needed
+- If permission denied, app shows appropriate message
+
+STORAGE PERMISSION:
+- Requested only when exporting data via SAF
+- Uses Android's Storage Access Framework (no broad storage access)
+- Test by tapping "Export Data" in Settings
+
+NO OTHER PERMISSIONS:
+- App does not request location, contacts, SMS, or other sensitive permissions
+- Verify in Android Settings > Apps > ClassHub > Permissions
+
+ACCESSIBILITY TESTING
+---------------------
+
+1. Enable TalkBack (Settings > Accessibility > TalkBack)
+2. Navigate through all screens
+3. Verify:
+   - All interactive elements have semantic labels
+   - Buttons are properly labeled
+   - List items announce student names and IDs
+   - Form fields have proper labels
+   - Navigation is logical and sequential
+
+4. Test with large text (Settings > Display > Font size)
+5. Verify UI scales appropriately
+
+OFFLINE FUNCTIONALITY
+----------------------
+
+1. Enable Airplane Mode
+2. Verify all features work without network:
+   - Add/edit students
+   - Mark attendance
+   - Create announcements
+   - View calendar
+   - Send messages
+   - Export data (uses local storage)
+
+DATA STORAGE
+------------
+
+- All data stored locally in SQLite database
+- No network requests made
+- No data transmitted to external servers
+- Verify using network monitoring tools if needed
+
+TEST DATA SETUP
+---------------
+
+For comprehensive testing, create:
+1. At least 2 classes (via Settings > Manage Classes)
+2. At least 3-5 students in different classes
+3. Mark attendance for multiple students on different dates
+4. Create 2-3 announcements (some for specific classes, some for all)
+5. Send 2-3 messages
+
+TESTING CHECKLIST
+-----------------
+
+[ ] App launches without requesting any permissions
+[ ] Can add students without camera permission
+[ ] Camera permission requested only when adding photos
+[ ] All screens accessible and functional
+[ ] Attendance marking works correctly
+[ ] Search functionality works
+[ ] Export creates valid JSON file
+[ ] No network requests made (verify with network monitor)
+[ ] TalkBack navigation works properly
+[ ] Large text displays correctly
+[ ] App works in airplane mode
+[ ] Data persists after app restart
+[ ] No crashes during normal usage
+
+KNOWN LIMITATIONS
+-----------------
+
+- Demo mode: Default admin user created on first launch
+- No authentication system (local roles only)
+- No cloud sync (by design - offline-first)
+- Import functionality is basic (full implementation would need conflict resolution)
+
+BUILD INFORMATION
+-----------------
+
+- Flutter SDK: 3.35.4 (stable)
+- Target SDK: 35 (Android 15) - Compliant with Google Play requirements
+- Min SDK: 21 (Android 5.0)
+- ProGuard/R8: Enabled for release builds
+- Obfuscation: Enabled
+
+CONTACT
+-------
+
+For questions during review, please refer to:
+- Privacy Policy: See privacy_policy.md
+- Build Instructions: See BUILD_INSTRUCTIONS.md
+
+Thank you for reviewing ClassHub!
+
